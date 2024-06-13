@@ -1,0 +1,54 @@
+<mat-toolbar>
+  <div class="container header-container">
+    <div class="header-container__logo-block">
+      <mat-icon (click)="drawer.toggle()">menu</mat-icon>
+      <a [routerLink]="['/main']">ToDo App</a>
+    </div>
+    <div class="header-container__user-container">
+      <div class="content">
+        <mat-icon (click)="toggleUserInfo()">assignment_ind</mat-icon>
+        <div class="info" *ngIf="showUserInfo && (activeUser$ | async) as user">
+          <div class="avatar">
+            <img src="{{user.data.img ?? './assets/img/blank_avatar.png'}}">
+          </div>
+          <div class="info__name">
+            <span>{{user.data.login}}</span><br/>
+            <span><strong>{{user.data.role}}</strong></span>
+          </div>
+          <div class="icon-container">
+            <mat-icon (click)="editUser()">settings</mat-icon>
+            <mat-icon (click)="logOut()">logout</mat-icon>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-drawer-container class="example-container">
+  <mat-drawer #drawer [mode]="'side'">
+    <div class="menu-container" *ngIf="(projectsList$ | async) as projects">
+      <div class="menu-item" *ngFor="let item of projects.data">
+        <a (click)="selectedProjectName = item">{{item}}</a>
+      </div>
+      <div class="add-prjct-container">
+        <button mat-raised-button (click)="addProject()">Add new project</button>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="content">
+      <div class="selected-project">
+        <div *ngIf="selectedProjectName; else noProjectSelected">
+          Test
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<ng-template #noProjectSelected>
+  <div class="empty-container">
+    <div class='text'>Please select a project to display</div>
+  </div>
+</ng-template>
