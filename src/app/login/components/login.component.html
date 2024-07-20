@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="form">
+
+  <div class="form-container" [formGroup]="form">
+    <div class="header">
+      <div class='login-icon-container'>
+        <mat-icon class="icon">
+          login
+        </mat-icon>
+      </div>
+      <h1>Login</h1>
+    </div>
+    <mat-form-field>
+      <mat-label>Login</mat-label>
+
+      <input formControlName = "login"
+             matInput
+             type="text"
+             placeholder = "Email">
+
+      <mat-error *ngIf="fc('login').invalid">
+        <div class="error-box">
+          Email cannot be empty
+        </div>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="password-input">
+      <mat-label>Password</mat-label>
+      <input formControlName="password"
+             matInput
+             type="{{showPassword ? 'text' : 'password'}}"
+             placeholder="Password">
+      <mat-icon
+        class="toggle-password"
+        (click)="togglePassword()">
+        {{showPassword ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+      <mat-error *ngIf="fc('password').invalid">
+        <div class="error-box">Password cannot be empty!</div>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="isRegistration" class="password-repeat">
+      <mat-label>Repeat password</mat-label>
+      <input formControlName="repeatPassword"
+             matInput
+             type="{{showPasswordRepeat ? 'text' : 'password'}}"
+             placeholder="Password">
+      <mat-icon
+        class="toggle-password"
+        (click)="togglePasswordRepeat()">
+        {{showPasswordRepeat ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+      <mat-error *ngIf="fc('repeatPassword').invalid &&
+      fc('password').value !== fc('repeatPassword').value">
+        <div class="error-box">Passwords must match!</div>
+      </mat-error>
+    </mat-form-field>
+    <div class="reg-toggle">
+      {{!this.isRegistration ? 'Dont have an account?' : 'Already have an account??'}}
+      <a class="register-link link-main" (click)="toggleLoginMode()">
+        {{!this.isRegistration ? 'Register' : 'Log in'}}
+      </a>
+    </div>
+    <div class="button-container">
+      <button mat-button (click)="submit()">{{this.isRegistration ? 'Register' : 'Log in'}}</button>
+    </div>
+  </div>
+  </div>
+
+
+<div class="login__bg-image">
+  <div class="parallax-wrapper">
+      <img
+        parallaxItem
+        [top]="item.top"
+        [left]="item.left"
+        [rotate]="item.rotate"
+        [inversion]="item.inversion"
+        [opacity]="item.opacity"
+        [movement]="item.movement"
+        style = 'height: 101vh'
+        alt="" src="/assets/img/bg-login.jpg">
+  </div>
+</div>
+</div>
